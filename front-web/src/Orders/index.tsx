@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import ProductsList from "./ProductsList";
 import StepsHeader from "./StepsHeader";
 import './styles.css';
-import { Product } from "./types";
+import { OrderLocationData, Product } from "./types";
 import { fetchProducts } from '../api';
+import OrderLocation from './OrderLocation';
 
 function Orders() { //usar o axios
     const [product, setProducts] = useState<Product[]>([]);
+    const [ordersLocation,setOrderLocation] = useState<OrderLocationData>();
     useEffect(() => {
         fetchProducts().then(response =>setProducts(response.data)
             ).catch(error =>console.log(error))
@@ -17,6 +19,7 @@ function Orders() { //usar o axios
         <div className="orders-container">
             <StepsHeader />
             <ProductsList products ={product}/>
+            <OrderLocation onChangeLocation= {location => setOrderLocation{location}}/>
         </div>
     )
 }
